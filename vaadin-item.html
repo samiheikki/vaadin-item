@@ -4,50 +4,67 @@ Copyright (c) 2017 Vaadin Ltd.
 This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
 -->
 
-<link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../vaadin-themable-mixin/vaadin-themable-mixin.html">
-<link rel="import" href="vaadin-item-mixin.html">
+<link rel="import" href="vaadin-item-notheme.html">
+<link rel="import" href="../vaadin-valo-theme/font-icons.html">
+<link rel="import" href="../vaadin-valo-theme/sizing.html">
+<link rel="import" href="../vaadin-valo-theme/spacing.html">
+<link rel="import" href="../vaadin-valo-theme/style.html">
+<link rel="import" href="../vaadin-valo-theme/typography.html">
 
-<dom-module id="vaadin-item">
+<dom-module id="valo-item" theme-for="vaadin-item">
   <template>
     <style>
       :host {
         display: flex;
         align-items: center;
+        min-height: var(--valo-size-m);
+        padding: var(--valo-space-xs) calc(var(--valo-space-m) + var(--valo-border-radius) / 4);
+        padding-right: calc(var(--valo-space-l) + var(--valo-border-radius) / 4);
+        box-sizing: border-box;
+        line-height: var(--valo-line-height-s);
+        border-radius: var(--valo-border-radius);
+        overflow: hidden;
       }
 
-      :host([hidden]) {
-        display: none !important;
+      @media (pointer: coarse) {
+        :host {
+          min-height: var(--valo-size-l);
+          padding-top: var(--valo-space-s);
+          padding-bottom: var(--valo-space-s);
+        }
+      }
+
+      /* It's the list-box's responsibility to add the focus style */
+      :host([focused]) {
+        outline: none;
+      }
+
+      /* Selected item has an icon */
+
+      :host::before {
+        display: var(--_valo-item-selected-icon-display, none);
+        content: "";
+        font-family: valo-icons;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: 400;
+        width: 24px;
+        margin-right: var(--valo-space-xs);
+        color: var(--valo-primary-text-color);
+        flex: none;
+      }
+
+      :host([selected])::before {
+        content: "\e902";
+      }
+
+      /* Disabled item */
+
+      :host([disabled]) {
+        color: var(--valo-disabled-text-color);
+        cursor: default;
+        pointer-events: none;
       }
     </style>
-    <slot></slot>
   </template>
-  <script>
-    {
-      /**
-       * `<vaadin-item>` is a Polymer 2 element providing layout for items in tabs and menus.
-       *
-       * @memberof Vaadin
-       * @mixes Vaadin.ItemMixin
-       * @mixes Vaadin.ThemableMixin
-       */
-      class ItemElement extends Vaadin.ItemMixin(Vaadin.ThemableMixin(Polymer.Element)) {
-        static get is() {
-          return 'vaadin-item';
-        }
-
-        static get version() {
-          return '1.0.0-alpha6';
-        }
-      }
-
-      customElements.define(ItemElement.is, ItemElement);
-
-      /**
-       * @namespace Vaadin
-       */
-      window.Vaadin = window.Vaadin || {};
-      Vaadin.ItemElement = ItemElement;
-    }
-  </script>
 </dom-module>
