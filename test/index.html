@@ -10,11 +10,36 @@
 
 <body>
   <script>
+    WCT._config.environmentScripts.push('iron-test-helpers/mock-interactions.js');
+    WCT._config.environmentScripts.push(location.href.replace(/[^/]+$/, '') + 'mock-touch-interactions.js');
+
     WCT._config.environmentScripts.push('webcomponentsjs/webcomponents-lite.js');
 
     WCT.loadSuites([
       'vaadin-item-mixin.html',
-      'vaadin-item.html'
+      'vaadin-item.html',
+      // vaadin-combo-box
+      '../../vaadin-combo-box/test/vaadin-combo-box.html',
+      '../../vaadin-combo-box/test/toggling-dropdown.html',
+      '../../vaadin-combo-box/test/overlay-position.html',
+      '../../vaadin-combo-box/test/selecting-items.html',
+      '../../vaadin-combo-box/test/form-input.html',
+      '../../vaadin-combo-box/test/filtering.html',
+      '../../vaadin-combo-box/test/keyboard.html',
+      '../../vaadin-combo-box/test/scrolling.html',
+      '../../vaadin-combo-box/test/aria.html',
+      '../../vaadin-combo-box/test/using-object-values.html',
+      '../../vaadin-combo-box/test/data-binding.html',
+      '../../vaadin-combo-box/test/late-upgrade.html',
+      '../../vaadin-combo-box/test/vaadin-combo-box-light.html',
+      '../../vaadin-combo-box/test/item-template.html',
+      '../../vaadin-combo-box/test/vaadin-combo-box-dropdown.html',
+      // vaadin-tabs
+      '../../vaadin-tabs/test/items.html',
+      '../../vaadin-tabs/test/nav.html',
+      '../../vaadin-tabs/test/scrollable-tabs.html',
+      // vaadin-list-box
+      '../../vaadin-list-box/test/list-box-test.html'
     ].reduce(function(suites, suite) {
       return suites.concat([suite, `${suite}?wc-shadydom=true`]);
     }, []));
